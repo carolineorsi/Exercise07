@@ -1,6 +1,7 @@
 from sys import argv
+import string
 
-script, filename = argv
+filename = argv[1]
 
 def create_word_list(filename):
 
@@ -9,13 +10,25 @@ def create_word_list(filename):
 	input_file = open(filename)
 
 	for line in input_file:
-	    words = line.rstrip().split(" ")
+	    words = line.rstrip().split()
 	    for word in words:
+	    	word = string.lower(remove_punc(word))
 	        word_list.append(word)
 
 	input_file.close()
 
 	return word_list
+
+
+def remove_punc(word):
+	
+	no_punc = ""
+
+	for char in word:
+		if char not in '!,./?-";':
+			no_punc = no_punc + char
+
+	return no_punc
 
 
 def create_dictionary(input_list):
@@ -34,11 +47,18 @@ def create_dictionary(input_list):
 def print_dict(input_dict):
 
 	for key, value in input_dict.iteritems():
-	    print "%s %d" % (key, value)
+	    print key, value
+
+def sort_and_print(input_dict):
+
+	sorted_list = sorted(input_dict.iteritems(), key=lambda (k, v): (v, k))
+	#sorted_list.reverse()
+	for item in sorted_list:
+		print item[0], item[1]
 
 
 def main():
-	print_dict(create_dictionary(create_word_list(filename)))
+	sort_and_print(create_dictionary(create_word_list(filename)))
 
 
 if __name__ == "__main__":
