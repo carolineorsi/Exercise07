@@ -51,10 +51,9 @@ def print_dict(input_dict):
 
 def sort_and_print(input_dict):
 
-	sorted_list = sorted(input_dict.iteritems(), key=lambda (k, v): (v, k))
-	#sorted_list.reverse()
-	for item in sorted_list:
-		print item[0], item[1]
+	sorted_list = sorted(input_dict, key = input_dict.__getitem__, reverse = True)
+	for key in sorted_list:
+		print key, input_dict[key]
 
 
 def main():
